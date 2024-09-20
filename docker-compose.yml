@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  pentaho:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pentaho9-server
+    ports:
+      - "8080:8080"  # Porta para o Pentaho Server
+    tty: true
+    stdin_open: true
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx2048m  # Configuração de memória da JVM
