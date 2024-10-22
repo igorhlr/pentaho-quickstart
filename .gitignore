@@ -1,5 +1,34 @@
 *.zip
+
+.zip
+
+pentaho-server-ce-9.4.0.0-343.zip
+
 *.env
+
+.env
+
 *.log
+
 *.out
+
 *.txt
+
+
+
+.DS_Store
+
+# Files/Folders generated when building
+pentaho.log
+work-item-status.log
+localhost.log
+localhost.properties
+localhost.script
+example.txt
+wi-status.error
+
+# Ignorar arquivos .log na pasta logs
+logs/*.log
+
+# Ignorar todos os arquivos na pasta sharedFolder
+sharedFolder/*
