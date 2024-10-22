@@ -28,6 +28,6 @@ wi-status.error
 # Ignorar todos os arquivos na pasta sharedFolder
 sharedFolder/*
 
-*.jar
+# *.jar
 
-libs/*
+# libs/*
