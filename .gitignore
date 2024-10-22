@@ -1,24 +1,22 @@
+# Ignorar todos os arquivos .zip
 *.zip
 
-.zip
-
-pentaho-server-ce-9.4.0.0-343.zip
-
+# Ignorar arquivos de ambiente
 *.env
-
 .env
 
+# Ignorar logs
 *.log
+logs/*.log
 
+# Ignorar arquivos de saída
 *.out
-
 *.txt
 
-
-
+# Ignorar arquivos e pastas específicos
 .DS_Store
 
-# Files/Folders generated when building
+# Ignorar arquivos/folders gerados durante o build
 pentaho.log
 work-item-status.log
 localhost.log
@@ -27,8 +25,9 @@ localhost.script
 example.txt
 wi-status.error
 
-# Ignorar arquivos .log na pasta logs
-logs/*.log
-
 # Ignorar todos os arquivos na pasta sharedFolder
 sharedFolder/*
+
+*.jar
+
+libs/*
