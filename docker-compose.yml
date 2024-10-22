@@ -1,13 +1,39 @@
 version: '3.7'
+
 services:
+
+  buildkit:
+    image: moby/buildkit:buildx-stable-1
+    container_name: buildkit
+    command: buildkitd
+    volumes:
+      - buildkit-cache:/var/lib/buildkit
+
   pentaho:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pentaho9-server
+      args:
+        - DOCKER_BUILDKIT=${DOCKER_BUILDKIT}
+    container_name: ${PENTAHO_CONTAINER_NAME}
     ports:
-      - "8080:8080"  # Porta para o Pentaho Server
+      - "${PENTAHO_PORT}:${PENTAHO_PORT}"
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+      - "${MSSQL_PORT}:${MSSQL_PORT}"
     tty: true
     stdin_open: true
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx2048m  # Configuração de memória da JVM
+      - JAVA_OPTS=${JAVA_OPTS}
+      - PENTAHO_HOME=${PENTAHO_HOME}
+      - JAVA_HOME=${JAVA_HOME}
+      - PENTAHO_JAVA_HOME=${PENTAHO_JAVA_HOME}
+    volumes:
+      - ./sharedFolder:/opt/sharedFolder
+    healthcheck:
+      test: ["CMD-SHELL", "bash || exit 1"]
+      interval: ${HEALTHCHECK_INTERVAL}
+      timeout: ${HEALTHCHECK_TIMEOUT}
+      retries: ${HEALTHCHECK_RETRIES}
+
+volumes:
+  buildkit-cache:

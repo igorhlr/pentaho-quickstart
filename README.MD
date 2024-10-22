@@ -1,6 +1,6 @@
 # **Manual Pentaho Dev Server 🛠️**
 
-Guia rápido para configurar um servidor Pentaho para manipulação de dados com ajustes personalizados de memória da JDK e porta. Siga os passos abaixo para um setup rápido e funcional.
+Guia rápido para configurar um servidor Pentaho. Siga os passos abaixo para um setup rápido e funcional.
 
 ## **Pré-requisitos**
 
@@ -23,41 +23,32 @@ Guia rápido para configurar um servidor Pentaho para manipulação de dados com
 
 - Abra o terminal na raiz do projeto e execute o comando abaixo para iniciar o Docker Compose:
   
-  ```bash
-  docker-compose up --build -d
-  ```
+```bash
+docker-compose up --build -d
+```
 
 ### 3. Acessar o Container do Pentaho
 
-- Entre no container do Pentaho pelo terminal com o comando:
+```bash
+docker exec -ti pentaho9-server /bin/bash
+```
 
-  ```bash
-  docker exec -ti pentaho9-server /bin/bash
-  ```
-
-### 4. Ajustes de Conector MySQL (Se necessário)
+### 4. Ajustes de Conector MySQL
 
 Antes de iniciar o Pentaho, faça os ajustes no conector do MySQL se estiver usando MySQL 5.7:
 
 1. **Remover conector antigo do MySQL 5.7**:
 
-   ```bash
-   rm -rf /opt/pentaho-server/pentaho-server/tomcat/lib/mysql-connector-java-5.1.17.jar
-   ```
+```bash
+rm -rf /opt/pentaho-server/pentaho-server/tomcat/lib/mysql-connector-java-5.1.17.jar
+```
 
-2. **Mover o conector MySQL 5.7 para a pasta correta**:
-
-   ```bash
-   mv /opt/mysql-connector-java-5.1.9.jar /opt/pentaho-server/pentaho-server/tomcat/lib
-   ```
 
 ### 5. Iniciar o Servidor Pentaho
 
-- Inicie o Pentaho Server com o comando:
-
-  ```bash
-  /opt/pentaho-server/pentaho-server/start-pentaho.sh
-  ```
+```bash
+/opt/pentaho-server/start-pentaho.sh
+```
 
 ### 6. Acessar o Pentaho
 
@@ -72,9 +63,26 @@ Antes de iniciar o Pentaho, faça os ajustes no conector do MySQL se estiver usa
 
 ## **Dicas Adicionais** 📌
 
-- **Ajuste de Memória JDK**: Se necessário, ajuste a alocação de memória do Docker no Docker Desktop:
-  - **Path**: Docker -> Configurações -> Resources -> Advanced.
-
-- **Modificação de Portas**: Modifique as portas do `docker-compose.yml` conforme sua necessidade de configuração.
-
 - **VSCode**: Utilize as extensões para Docker e suporte a Shell Scripts para um gerenciamento mais fácil e direto dentro do editor.
+
+- **Controle no .env na raiz**: 
+
+```bash
+JAVA_OPTS=-Xms512m -Xmx1024m
+
+PENTAHO_HOME=/opt/pentaho-server
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64
+PENTAHO_JAVA_HOME=${JAVA_HOME}
+
+PENTAHO_PORT=8080
+MYSQL_PORT=3306
+MSSQL_PORT=1433
+
+PENTAHO_CONTAINER_NAME=pentaho9-server
+
+DOCKER_BUILDKIT=1
+
+HEALTHCHECK_INTERVAL=1m
+HEALTHCHECK_TIMEOUT=10s
+HEALTHCHECK_RETRIES=3
+```
