@@ -18,8 +18,8 @@ services:
     container_name: ${PENTAHO_CONTAINER_NAME}
     ports:
       - "${PENTAHO_PORT}:${PENTAHO_PORT}"
-      - "${MYSQL_PORT}:${MYSQL_PORT}"
-      - "${MSSQL_PORT}:${MSSQL_PORT}"
+      # - "${MYSQL_PORT}:${MYSQL_PORT}"
+      # - "${MSSQL_PORT}:${MSSQL_PORT}"
     tty: true
     stdin_open: true
     environment:
